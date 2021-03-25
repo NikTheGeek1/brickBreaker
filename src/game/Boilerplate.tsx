@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import GUIs from './GUI/GUIs';
 
 class Boilerplate {
 
@@ -6,6 +7,7 @@ class Boilerplate {
     public scene!: THREE.Scene;
     public camera!: THREE.Camera;
     public renderer!: THREE.Renderer;
+    public sphere!: THREE.Mesh;
 
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
@@ -25,22 +27,36 @@ class Boilerplate {
     }
 
     private createRenderer(): void {
-        this.renderer = new THREE.WebGLRenderer({canvas: this.canvas});
+        this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
         this.renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    // initalise a sphere - black in colour 
+
+    private createSphere(): void {
+        const geometry = new THREE.SphereGeometry();
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
+        this.sphere = new THREE.Mesh(geometry, material);
+        this.scene.add(this.sphere);
     }
 
 
     private animate(): void {
+        this.sphere.rotation.x += 0.01;
         requestAnimationFrame(this.animate.bind(this));
         this.renderer.render(this.scene, this.camera);
     }
 
+
     // initialise 3D default methods
 
-    public init():void {
+    public init(): void {
         this.createScene();
         this.createCamera();
         this.createRenderer();
+
+        this.createSphere();
+        new GUIs(this).generateGUIs();
         this.animate();
     }
 

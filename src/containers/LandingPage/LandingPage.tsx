@@ -12,7 +12,9 @@ const LandingPage = () => {
 
     useEffect(() => {
         if (canvasRef && canvasRef.current){
-            setBoilerplate(new Boilerplate(canvasRef.current));
+            const bb:Boilerplate = new Boilerplate(canvasRef.current)
+            setBoilerplate(bb);
+            bb.init();
         }
     }, []);
 
