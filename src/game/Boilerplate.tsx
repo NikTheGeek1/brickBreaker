@@ -11,6 +11,9 @@ class Boilerplate {
         this.canvas = canvas;
     }
 
+    // These are boilerplate three.js methods to create a scene, camera, render and animation
+    // Animate is called recursively to render the animation continuously
+
     private createScene(): void {
         this.scene = new THREE.Scene();
         this.scene.background = new THREE.Color("black");
@@ -27,13 +30,13 @@ class Boilerplate {
     }
 
 
-    
-
     private animate(): void {
         requestAnimationFrame(this.animate.bind(this));
         this.renderer.render(this.scene, this.camera);
     }
 
+    // initialise 3D default methods
+    
     public init():void {
         this.createScene();
         this.createCamera();
