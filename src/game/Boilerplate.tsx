@@ -36,7 +36,7 @@ class Boilerplate {
     }
 
     // initialise 3D default methods
-    
+
     public init():void {
         this.createScene();
         this.createCamera();
