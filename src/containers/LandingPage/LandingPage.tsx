@@ -1,6 +1,6 @@
 import { createRef, useEffect, useState } from 'react';
 import './LandingPage.css';
-import Boilerplate from '../../game/Boilerplate';
+import Boilerplate from '../../game/Main';
 
 
 const LandingPage = () => {
