@@ -21,9 +21,9 @@ class Walls {
     }
 
     private createMaterials(): void {
-        this.wallMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false, map: this.wallTexture}); // TODO: Add a street material for the bottom wall, sky for the top
-        this.streetMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false, map: this.streetTexture}); // TODO: Add a street material for the bottom wall, sky for the top
-        this.skyMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false, map: this.skyTexture}); // TODO: Add a street material for the bottom wall, sky for the top
+        this.wallMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false, map: this.wallTexture}); 
+        this.streetMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false, map: this.streetTexture}); 
+        this.skyMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false, map: this.skyTexture}); 
     }
 
     private createWalls(): void {

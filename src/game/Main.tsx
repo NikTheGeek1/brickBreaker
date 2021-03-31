@@ -3,6 +3,8 @@ import Walls from './Walls';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import Basketball from './Basketball';
 import Stats from 'three/examples/jsm/libs/stats.module';
+import Mousepicker from './Mousepicker';
+import Shield from './Shield';
 
 class Main {
 
@@ -10,11 +12,13 @@ class Main {
     public scene!: THREE.Scene;
     public camera!: THREE.PerspectiveCamera;
     public renderer!: THREE.Renderer;
-    public sphere!: THREE.Mesh;
     public wallsInstance!: Walls;
     public basketballInstance!: Basketball;
     public orbitControlls!: OrbitControls;
+    public shieldInstance!: Shield;
+    public mousePickerInstance!: Mousepicker;
     private stats!: Stats;
+
 
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
@@ -62,6 +66,16 @@ class Main {
         this.basketballInstance.init();
     }
 
+    private createMousepicker(): void {
+        this.mousePickerInstance = new Mousepicker(this);
+        this.mousePickerInstance.inti();
+    }
+
+    private chreateShield(): void {
+        this.shieldInstance = new Shield(this);
+        this.shieldInstance.init();
+    }
+
     private animate(): void {
         this.basketballInstance.basketball.position.x += this.basketballInstance.basketballXIncrement;
         this.basketballInstance.basketball.position.y += this.basketballInstance.basketballYIncrement;
@@ -79,6 +93,17 @@ class Main {
             this.basketballInstance.basketball.position.z > this.wallsInstance.planes[5].position.z) {
             this.basketballInstance.basketballZIncrement *= -1;
         }
+
+        if (this.shieldInstance.shieldBallColisionDetector(
+            this.basketballInstance.basketball.position.x,
+            this.basketballInstance.basketball.position.y,
+            this.basketballInstance.basketball.position.z
+        )) {
+            this.basketballInstance.basketballXIncrement *= -1;
+            // this.basketballInstance.basketballYIncrement *= -1;
+            this.basketballInstance.basketballZIncrement *= -1;
+        }
+
         requestAnimationFrame(this.animate.bind(this));
         this.stats.update();
         this.renderer.render(this.scene, this.camera);
@@ -94,6 +119,8 @@ class Main {
         this.createStats();
         this.createWalls();
         this.createBasketball();
+        this.createMousepicker();
+        this.chreateShield();
         this.animate();
     }
 
