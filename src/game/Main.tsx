@@ -6,19 +6,21 @@ import Stats from 'three/examples/jsm/libs/stats.module';
 import Mousepicker from './Mousepicker';
 import Shield from './Shield';
 import Lights from './Lights';
+import Shadows from './Shadows';
 
 class Main {
 
     public canvas: HTMLCanvasElement;
     public scene!: THREE.Scene;
     public camera!: THREE.PerspectiveCamera;
-    public renderer!: THREE.Renderer;
+    public renderer!: THREE.WebGLRenderer;
     public wallsInstance!: Walls;
     public basketballInstance!: Basketball;
     public orbitControlls!: OrbitControls;
     public shieldInstance!: Shield;
     public mousePickerInstance!: Mousepicker;
     public lightsInstance!: Lights;
+    public shadowsInstance!: Shadows;
     private stats!: Stats;
 
 
@@ -82,6 +84,11 @@ class Main {
         this.lightsInstance.init();
     }
 
+    private createShadows(): void {
+        this.shadowsInstance = new Shadows(this);
+        this.shadowsInstance.init();
+    }
+
     private animate(): void {
         this.basketballInstance.basketball.position.x += this.basketballInstance.basketballXIncrement;
         this.basketballInstance.basketball.position.y += this.basketballInstance.basketballYIncrement;
@@ -111,6 +118,7 @@ class Main {
         }
 
         this.lightsInstance.updateHelpers();
+        this.shadowsInstance.updateShadowHelpers();
         requestAnimationFrame(this.animate.bind(this));
         this.stats.update();
         this.renderer.render(this.scene, this.camera);
@@ -129,6 +137,7 @@ class Main {
         this.createMousepicker();
         this.createShield();
         this.createLights();
+        this.createShadows();
         this.animate();
     }
 

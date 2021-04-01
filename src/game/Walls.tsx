@@ -7,9 +7,9 @@ import skyImg from '../assets/textures/sky.jpeg';
 class Walls {
     private main: Main;
     public planes: THREE.Mesh[];
-    public wallMaterial!: THREE.MeshBasicMaterial;
-    public streetMaterial!: THREE.MeshBasicMaterial;
-    public skyMaterial!: THREE.MeshBasicMaterial;
+    public wallMaterial!: THREE.MeshPhongMaterial;
+    public streetMaterial!: THREE.MeshPhongMaterial;
+    public skyMaterial!: THREE.MeshPhongMaterial;
     public wallTexture!: THREE.Texture;
     public skyTexture!: THREE.Texture;
     public streetTexture!: THREE.Texture;
@@ -21,9 +21,9 @@ class Walls {
     }
 
     private createMaterials(): void {
-        this.wallMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false, map: this.wallTexture}); 
-        this.streetMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false, map: this.streetTexture}); 
-        this.skyMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false, map: this.skyTexture}); 
+        this.wallMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff, wireframe: false, map: this.wallTexture}); 
+        this.streetMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff, wireframe: false, map: this.streetTexture}); 
+        this.skyMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff, wireframe: false, map: this.skyTexture}); 
     }
 
     private createWalls(): void {

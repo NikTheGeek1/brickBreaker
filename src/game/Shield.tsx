@@ -4,7 +4,7 @@ import Main from './Main';
 class Shield {
 
     private main: Main;
-    private plane!: THREE.Mesh;
+    public plane!: THREE.Mesh;
     private raycaster!: THREE.Raycaster;
 
     constructor(main: Main) {
