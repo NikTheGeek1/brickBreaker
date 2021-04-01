@@ -117,6 +117,7 @@ class Main {
             this.basketballInstance.basketballZIncrement *= -1;
         }
 
+        this.lightsInstance.changeLightColours();
         this.lightsInstance.updateHelpers();
         this.shadowsInstance.updateShadowHelpers();
         requestAnimationFrame(this.animate.bind(this));

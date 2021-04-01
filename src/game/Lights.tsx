@@ -87,6 +87,12 @@ class Lights {
         this.createSpotLight(13, 20, -13);
     }
 
+    public changeLightColours(): void {
+        this.spotLights.forEach((sptLight: THREE.SpotLight) => {
+            sptLight.color.setHex(sptLight.color.getHex() + 100);
+        });
+    }
+
 
     public init(): void {
         // order matters here.
