@@ -5,6 +5,7 @@ import Basketball from './Basketball';
 import Stats from 'three/examples/jsm/libs/stats.module';
 import Mousepicker from './Mousepicker';
 import Shield from './Shield';
+import Lights from './Lights';
 
 class Main {
 
@@ -17,6 +18,7 @@ class Main {
     public orbitControlls!: OrbitControls;
     public shieldInstance!: Shield;
     public mousePickerInstance!: Mousepicker;
+    public lightsInstance!: Lights;
     private stats!: Stats;
 
 
@@ -55,7 +57,6 @@ class Main {
         document.body.appendChild(this.stats.dom);
     }
 
-
     private createWalls(): void {
         this.wallsInstance = new Walls(this);
         this.wallsInstance.init();
@@ -71,9 +72,14 @@ class Main {
         this.mousePickerInstance.inti();
     }
 
-    private chreateShield(): void {
+    private createShield(): void {
         this.shieldInstance = new Shield(this);
         this.shieldInstance.init();
+    }
+
+    private createLights(): void {
+        this.lightsInstance = new Lights(this);
+        this.lightsInstance.init();
     }
 
     private animate(): void {
@@ -104,6 +110,7 @@ class Main {
             this.basketballInstance.basketballZIncrement *= -1;
         }
 
+        this.lightsInstance.updateHelpers();
         requestAnimationFrame(this.animate.bind(this));
         this.stats.update();
         this.renderer.render(this.scene, this.camera);
@@ -120,7 +127,8 @@ class Main {
         this.createWalls();
         this.createBasketball();
         this.createMousepicker();
-        this.chreateShield();
+        this.createShield();
+        this.createLights();
         this.animate();
     }
 

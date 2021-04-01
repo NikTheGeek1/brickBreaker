@@ -7,7 +7,7 @@ type sphereData = { radius?: number, widthSegments?: number, heightSegments?: nu
 class Basketball {
     private main: Main;
     public basketball!: THREE.Mesh;
-    private material!: THREE.MeshBasicMaterial;
+    private material!: THREE.MeshPhongMaterial;
     private texture!: THREE.Texture;
     public basketballXIncrement: number;
     public basketballYIncrement: number;
@@ -38,7 +38,7 @@ class Basketball {
     }
 
     private createMaterial(): void {
-        this.material = new THREE.MeshBasicMaterial({map: this.texture});
+        this.material = new THREE.MeshPhongMaterial({map: this.texture});
     }
 
     private createBasketball(): void {

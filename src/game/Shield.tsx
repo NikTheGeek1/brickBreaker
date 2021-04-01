@@ -16,7 +16,7 @@ class Shield {
     }
 
     private createPlane(): void {
-        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
+        const material = new THREE.MeshPhongMaterial({ color: 0x00ff00, wireframe: true });
         const geometry = new THREE.PlaneGeometry(5, 5, 2, 2);
         this.plane = new THREE.Mesh(geometry, material);
         this.main.scene.add(this.plane);
