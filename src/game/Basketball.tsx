@@ -27,8 +27,8 @@ class Basketball {
             thetaStart: Math.PI,
             thetaLength: Math.PI
         };
-        this.basketballXIncrement = .12;
-        this.basketballYIncrement = .12;
+        this.basketballXIncrement = 0;
+        this.basketballYIncrement = 0;
         this.basketballZIncrement = .12;
     }
 

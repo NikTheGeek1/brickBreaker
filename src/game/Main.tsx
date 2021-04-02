@@ -7,6 +7,7 @@ import Mousepicker from './Mousepicker';
 import Shield from './Shield';
 import Lights from './Lights';
 import Shadows from './Shadows';
+import BallTrajectory from './BallTrajectory';
 
 class Main {
 
@@ -21,6 +22,7 @@ class Main {
     public mousePickerInstance!: Mousepicker;
     public lightsInstance!: Lights;
     public shadowsInstance!: Shadows;
+    public ballTrajectory!: BallTrajectory;
     private stats!: Stats;
 
 
@@ -42,7 +44,7 @@ class Main {
     private createCamera(): void {
         this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, .1, 1000);
         this.camera.position.y = 5;
-        this.camera.position.z = 20;
+        this.camera.position.z = 30;
     }
 
     private createRenderer(): void {
@@ -89,37 +91,15 @@ class Main {
         this.shadowsInstance.init();
     }
 
+    private createBallTrajectory(): void {
+        this.ballTrajectory = new BallTrajectory(this);
+    }
+
     private animate(): void {
-        this.basketballInstance.basketball.position.x += this.basketballInstance.basketballXIncrement;
-        this.basketballInstance.basketball.position.y += this.basketballInstance.basketballYIncrement;
-        this.basketballInstance.basketball.position.z += this.basketballInstance.basketballZIncrement;
-
-        if (this.basketballInstance.basketball.position.x < this.wallsInstance.planes[0].position.x ||
-            this.basketballInstance.basketball.position.x > this.wallsInstance.planes[1].position.x) {
-            this.basketballInstance.basketballXIncrement *= -1;
-        }
-        if (this.basketballInstance.basketball.position.y < this.wallsInstance.planes[2].position.y ||
-            this.basketballInstance.basketball.position.y > this.wallsInstance.planes[3].position.y) {
-            this.basketballInstance.basketballYIncrement *= -1;
-        }
-        if (this.basketballInstance.basketball.position.z < this.wallsInstance.planes[4].position.z ||
-            this.basketballInstance.basketball.position.z > this.wallsInstance.planes[5].position.z) {
-            this.basketballInstance.basketballZIncrement *= -1;
-        }
-
-        if (this.shieldInstance.shieldBallColisionDetector(
-            this.basketballInstance.basketball.position.x,
-            this.basketballInstance.basketball.position.y,
-            this.basketballInstance.basketball.position.z
-        )) {
-            this.basketballInstance.basketballXIncrement *= -1;
-            // this.basketballInstance.basketballYIncrement *= -1;
-            this.basketballInstance.basketballZIncrement *= -1;
-        }
-
-        this.lightsInstance.changeLightColours();
-        this.lightsInstance.updateHelpers();
-        this.shadowsInstance.updateShadowHelpers();
+        this.ballTrajectory.calculateTrajectory();
+        // this.lightsInstance.changeLightColours();
+        // this.lightsInstance.updateHelpers();
+        // this.shadowsInstance.updateShadowHelpers();
         requestAnimationFrame(this.animate.bind(this));
         this.stats.update();
         this.renderer.render(this.scene, this.camera);
@@ -135,10 +115,11 @@ class Main {
         this.createStats();
         this.createWalls();
         this.createBasketball();
-        this.createMousepicker();
+        // this.createMousepicker();
         this.createShield();
         this.createLights();
-        this.createShadows();
+        // this.createShadows();
+        this.createBallTrajectory();
         this.animate();
     }
 
