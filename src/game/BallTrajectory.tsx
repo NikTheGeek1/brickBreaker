@@ -5,29 +5,59 @@ class BallTrajectory {
     private main: Main;
     private shieldLastXPositions: number[];
     private shieldLastYPositions: number[];
-    private currentTrackIdx: number;
+    private shouldTrackShieldDirections: boolean;
     private shieldXDirection: number;
     private shieldYDirection: number;
     private rotationX: number;
     private rotationY: number;
     private rotationDecrement: number;
+    public ballOnShield: boolean;
 
     constructor(main: Main) {
         this.main = main;
         this.shieldLastXPositions = [];
         this.shieldLastYPositions = [];
-        this.currentTrackIdx = 0;
+        this.shouldTrackShieldDirections = false;
         this.shieldXDirection = 0;
         this.shieldYDirection = 0;
         this.rotationX = 0;
         this.rotationY = 0;
         this.rotationDecrement = 0.01;
+        this.ballOnShield = false;
+    }
+
+    private releaseBall(): void {
+        if (this.ballOnShield) {
+            this.main.basketballInstance.basketballXIncrement = 0.01;
+            this.main.basketballInstance.basketballYIncrement = 0.01;
+            this.main.basketballInstance.basketballZIncrement = -0.12;
+            this.rotationX = this.shieldXDirection;
+            this.rotationY = this.shieldYDirection;
+            this.incrementPositions();
+            this.shieldLastXPositions = [];
+            this.shieldLastYPositions = [];
+
+            this.shouldTrackShieldDirections = false;
+            this.ballOnShield = false;
+        }
+    }
+
+    private startTrackingShieldDirection(): void {
+        if (this.ballOnShield) {
+            this.shouldTrackShieldDirections = true;
+        }
+    }
+
+    private registerEventListeners(): void {
+        document.addEventListener("mousedown", this.startTrackingShieldDirection.bind(this), false);
+        document.addEventListener("mouseup", this.releaseBall.bind(this), false);
     }
 
     private trackShieldLastPositions(): void {
-        this.shieldLastXPositions[this.currentTrackIdx % 20] = this.main.shieldInstance.plane.position.x;
-        this.shieldLastYPositions[this.currentTrackIdx % 20] = this.main.shieldInstance.plane.position.y;
-        this.currentTrackIdx++;
+        if (this.shouldTrackShieldDirections) {
+            this.shieldLastXPositions.push(this.main.shieldInstance.plane.position.x);
+            this.shieldLastYPositions.push(this.main.shieldInstance.plane.position.y);
+        }
     }
 
     public calculateSlope(X: number[], Y: number[]): number {
@@ -41,12 +71,11 @@ class BallTrajectory {
     private calculateShieldDirections(): void {
         this.shieldXDirection = this.calculateSlope(
             Array.from(Array(this.shieldLastXPositions.length + 1).keys()).slice(1),
-            this.shieldLastXPositions);
+            this.shieldLastXPositions) * -1;
 
         this.shieldYDirection = this.calculateSlope(
             Array.from(Array(this.shieldLastYPositions.length + 1).keys()).slice(1),
-            this.shieldLastYPositions);
-
+            this.shieldLastYPositions) * -1;
     }
 
     private incrementPositions(): void {
@@ -104,22 +133,39 @@ class BallTrajectory {
             this.main.basketballInstance.basketball.position.y,
             this.main.basketballInstance.basketball.position.z
         )) {
-            this.main.basketballInstance.basketballZIncrement *= -1;
-             this.rotationX = this.shieldYDirection;
-             this.rotationY = this.shieldXDirection;
+            this.ballOnShield = true;
+            this.main.basketballInstance.basketballXIncrement *= 0;
+            this.main.basketballInstance.basketballYIncrement *= 0;
+            this.main.basketballInstance.basketballZIncrement *= 0;
+            this.rotationX = 0;
+            this.rotationY = 0;
+        }
+    }
+
+    private ballStuckOnShield(): void {
+        if (this.ballOnShield) {
+            this.main.basketballInstance.basketball.position.set(
+                this.main.shieldInstance.plane.position.x,
+                this.main.shieldInstance.plane.position.y,
+                this.main.shieldInstance.plane.position.z,
+            );
         }
     }
 
     public calculateTrajectory(): void {
+        this.ballStuckOnShield();
         this.trackShieldLastPositions();
         this.calculateShieldDirections();
         this.decrementRotations();
         this.incrementPositions();
-        // this.changeRotations();
-        
+        this.changeRotations();
+
         this.checkIfBallHitsAWall();
         this.checkIfBallHitsTheShield();
+    }
 
+    public init(): void {
+        this.registerEventListeners();
     }
 }
 

@@ -23,7 +23,7 @@ class Shield {
     }
 
     private registerEventListener(): void {
-        document.addEventListener('mousemove', this.mouseMoveHandler.bind(this), false);
+        document.addEventListener('pointermove', this.mouseMoveHandler.bind(this), false);
     }
 
     private mouseMoveHandler(e: MouseEvent): void {
@@ -34,7 +34,7 @@ class Shield {
             y: y
         }, this.main.camera);
         const coords = this.raycaster.ray.at(this.main.camera.position.z, new THREE.Vector3());
-        this.plane.position.set(coords.x, coords.y, 1);
+        this.plane.position.set(coords.x, coords.y, 10);
     }
 
     public shieldBallColisionDetector(ballX: number, ballY: number, ballZ: number): boolean {

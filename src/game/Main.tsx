@@ -54,6 +54,8 @@ class Main {
 
     private createOrbitControlls(): void {
         this.orbitControlls = new OrbitControls(this.camera, this.canvas);
+        this.orbitControlls.enableRotate = false;
+        this.orbitControlls.enablePan = false;
     }
 
     private createStats(): void {
@@ -93,6 +95,7 @@ class Main {
 
     private createBallTrajectory(): void {
         this.ballTrajectory = new BallTrajectory(this);
+        this.ballTrajectory.init();
     }
 
     private animate(): void {
@@ -111,7 +114,7 @@ class Main {
         this.createScene();
         this.createCamera();
         this.createRenderer();
-        this.createOrbitControlls();
+        // this.createOrbitControlls();
         this.createStats();
         this.createWalls();
         this.createBasketball();
