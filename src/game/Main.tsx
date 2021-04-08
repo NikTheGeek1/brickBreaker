@@ -10,6 +10,7 @@ import Shadows from './Shadows';
 import BallTrajectory from './BallTrajectory';
 import Target from './Target';
 import CameraKeyListeners from './CameraKeyListeners';
+import BallAndTarget from '../utils/BallAndTarget';
 
 class Main {
 
@@ -27,6 +28,7 @@ class Main {
     public targetInstance!: Target;
     public ballTrajectory!: BallTrajectory;
     private stats!: Stats;
+    private ballAndTarget!: BallAndTarget;
 
 
     constructor(canvas: HTMLCanvasElement) {
@@ -110,8 +112,13 @@ class Main {
         new CameraKeyListeners(this).registerListeners();
     }
 
+    private createBallAndTargetInstance(): void {
+        this.ballAndTarget = new BallAndTarget(this);
+    }
+
     private animate(): void {
         this.ballTrajectory.calculateTrajectory();
+        this.ballAndTarget.isBallInTarget();
         // this.lightsInstance.changeLightColours();
         // this.lightsInstance.updateHelpers();
         // this.shadowsInstance.updateShadowHelpers();
@@ -137,6 +144,8 @@ class Main {
         this.registerCamerKeyListeners();
         // this.createShadows();
         this.createBallTrajectory();
+        this.createBallAndTargetInstance();
+        this.ballAndTarget.init();
         this.animate();
     }
 

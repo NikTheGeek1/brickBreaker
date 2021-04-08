@@ -17,7 +17,7 @@ class Target {
     }
 
     private createRing(): void {
-        const geometry = new THREE.TorusGeometry(5, .5, 10, 10, Math.PI * 2);
+        const geometry = new THREE.TorusGeometry(5, .5, 30, 30, Math.PI * 2);
         this.target = new THREE.Mesh(geometry, this.material);
         this.easyTarget();
         this.main.scene.add(this.target);
