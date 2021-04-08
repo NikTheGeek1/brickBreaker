@@ -8,6 +8,8 @@ import Shield from './Shield';
 import Lights from './Lights';
 import Shadows from './Shadows';
 import BallTrajectory from './BallTrajectory';
+import Target from './Target';
+import CameraKeyListeners from './CameraKeyListeners';
 
 class Main {
 
@@ -22,6 +24,7 @@ class Main {
     public mousePickerInstance!: Mousepicker;
     public lightsInstance!: Lights;
     public shadowsInstance!: Shadows;
+    public targetInstance!: Target;
     public ballTrajectory!: BallTrajectory;
     private stats!: Stats;
 
@@ -98,6 +101,15 @@ class Main {
         this.ballTrajectory.init();
     }
 
+    private createTargetInstance(): void {
+        this.targetInstance = new Target(this);
+        this.targetInstance.init();
+    }
+
+    private registerCamerKeyListeners():void {
+        new CameraKeyListeners(this).registerListeners();
+    }
+
     private animate(): void {
         this.ballTrajectory.calculateTrajectory();
         // this.lightsInstance.changeLightColours();
@@ -121,6 +133,8 @@ class Main {
         // this.createMousepicker();
         this.createShield();
         this.createLights();
+        this.createTargetInstance();
+        this.registerCamerKeyListeners();
         // this.createShadows();
         this.createBallTrajectory();
         this.animate();

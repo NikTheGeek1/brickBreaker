@@ -79,8 +79,8 @@ class BallTrajectory {
     }
 
     private incrementPositions(): void {
-        this.main.basketballInstance.basketballYIncrement += this.rotationY / 50;
-        this.main.basketballInstance.basketballXIncrement += this.rotationX / 50;
+        this.main.basketballInstance.basketballYIncrement += this.rotationY / 150;
+        this.main.basketballInstance.basketballXIncrement += this.rotationX / 150;
         this.main.basketballInstance.basketball.position.x += this.main.basketballInstance.basketballXIncrement;
         this.main.basketballInstance.basketball.position.y += this.main.basketballInstance.basketballYIncrement;
         this.main.basketballInstance.basketball.position.z += this.main.basketballInstance.basketballZIncrement;
