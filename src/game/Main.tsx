@@ -118,7 +118,7 @@ class Main {
 
     private animate(): void {
         this.ballTrajectory.calculateTrajectory();
-        this.ballAndTarget.isBallInTarget();
+        this.ballAndTarget.ballAndTargetAnalyser();
         // this.lightsInstance.changeLightColours();
         // this.lightsInstance.updateHelpers();
         // this.shadowsInstance.updateShadowHelpers();
