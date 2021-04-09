@@ -2,6 +2,7 @@ import Main from './Main';
 import { Algebra, Calculus } from '../utils/math/math-utils';
 
 class BallTrajectory {
+    
     private main: Main;
     private shieldLastXPositions: number[];
     private shieldLastYPositions: number[];

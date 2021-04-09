@@ -98,8 +98,8 @@ class Lights {
         // order matters here.
         this.createSpotLights();
         // this.createSpotLightHelpers();
-        this.createSpotLightData();
-        this.createSpotLightGUIs();
+        // this.createSpotLightData();
+        // this.createSpotLightGUIs();
     }
 
 }

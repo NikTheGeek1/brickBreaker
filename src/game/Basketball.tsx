@@ -38,7 +38,7 @@ class Basketball {
     }
 
     private createMaterial(): void {
-        this.material = new THREE.MeshPhongMaterial({map: this.texture});
+        this.material = new THREE.MeshPhongMaterial({ map: this.texture });
     }
 
     private createBasketball(): void {
@@ -69,7 +69,7 @@ class Basketball {
         scaleFolder.add(this.basketball.scale, "x", 1, 10, 0.01);
         scaleFolder.add(this.basketball.scale, "y", 1, 10, 0.01);
         scaleFolder.add(this.basketball.scale, "z", 1, 10, 0.01);
-        
+
         sphereFolder.add(this.material, 'wireframe');
         sphereFolder.add(this.basketball, "visible", true);
 
@@ -85,7 +85,7 @@ class Basketball {
 
     private regenerateSphereGeometry(): void {
         const newGeometry = new THREE.SphereGeometry(
-            this.sphereData.radius, this.sphereData.widthSegments, 
+            this.sphereData.radius, this.sphereData.widthSegments,
             this.sphereData.heightSegments, this.sphereData.phiStart,
             this.sphereData.phiLength, this.sphereData.thetaStart,
             this.sphereData.thetaLength
