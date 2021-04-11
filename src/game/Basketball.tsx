@@ -44,8 +44,9 @@ class Basketball {
     private createBasketball(): void {
         const geometry = new THREE.SphereGeometry(); // TODO: add the correct properties
         this.basketball = new THREE.Mesh(geometry, this.material);
-        this.basketball.position.z = -5;
-        this.basketball.position.y = 5;
+        this.basketball.position.z = this.main.shieldInstance.plane.position.z;
+        this.basketball.position.y = this.main.shieldInstance.plane.position.y;
+        this.basketball.position.x = this.main.shieldInstance.plane.position.x;
         this.main.scene.add(this.basketball);
     }
 

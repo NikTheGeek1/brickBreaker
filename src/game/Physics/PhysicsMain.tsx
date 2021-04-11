@@ -55,15 +55,15 @@ class PhysicsMain {
 
         // Copy coordinates from Cannon.js to Three.js
         this.main.basketballInstance.basketball.position.set(
-            this.ballInstance.targetBody.position.x,
-            this.ballInstance.targetBody.position.y,
-            this.ballInstance.targetBody.position.z
+            this.ballInstance.ballBody.position.x,
+            this.ballInstance.ballBody.position.y,
+            this.ballInstance.ballBody.position.z
         );
         this.main.basketballInstance.basketball.quaternion.set(
-            this.ballInstance.targetBody.quaternion.x,
-            this.ballInstance.targetBody.quaternion.y,
-            this.ballInstance.targetBody.quaternion.z,
-            this.ballInstance.targetBody.quaternion.w
+            this.ballInstance.ballBody.quaternion.x,
+            this.ballInstance.ballBody.quaternion.y,
+            this.ballInstance.ballBody.quaternion.z,
+            this.ballInstance.ballBody.quaternion.w
         );
         this.main.targetInstance.target.position.set(
             this.targetInstance.targetBody.position.x,

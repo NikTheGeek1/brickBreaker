@@ -11,6 +11,7 @@ import BallTrajectory from './BallTrajectory';
 import Target from './Target';
 import CameraKeyListeners from './CameraKeyListeners';
 import PhysicsMain from './Physics/PhysicsMain';
+import Controls from './Controls';
 
 class Main {
 
@@ -29,6 +30,7 @@ class Main {
     public ballTrajectory!: BallTrajectory;
     private stats!: Stats;
     private physicsMainInstance!: PhysicsMain;
+    public controlsInstance!: Controls;
 
 
     constructor(canvas: HTMLCanvasElement) {
@@ -108,8 +110,13 @@ class Main {
         this.targetInstance.init();
     }
 
-    private registerCamerKeyListeners():void {
+    private registerCamerKeyListeners(): void {
         new CameraKeyListeners(this).registerListeners();
+    }
+
+    private createControlsInstance(): void {
+        this.controlsInstance = new Controls(this);
+        this.controlsInstance.init();
     }
 
 
@@ -119,6 +126,7 @@ class Main {
     }
 
     private animate(): void {
+        // this.ballTrajectory.calculateTrajectory();
         this.physicsMainInstance.linkPhysicsToRealWorld();
         // this.lightsInstance.changeLightColours();
         // this.lightsInstance.updateHelpers();
@@ -137,12 +145,13 @@ class Main {
         // this.createOrbitControlls();
         this.createStats();
         this.createWalls();
-        this.createBasketball();
         // this.createMousepicker();
         this.createShield();
+        this.createBasketball();
         this.createLights();
         this.createTargetInstance();
         this.registerCamerKeyListeners();
+        this.createControlsInstance();
         // this.createShadows();
         this.createBallTrajectory();
         this.createPhysicsMainInstance();
