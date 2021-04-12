@@ -7,14 +7,21 @@ class Controls {
     private main: Main;
     private controls!: PointerLockControls;
     private isLockedSetter!: React.Dispatch<React.SetStateAction<boolean | undefined>>;
+    public areControlsLocked: boolean;
 
     constructor(main: Main) {
         this.main = main;
+        this.areControlsLocked = false;
     }
 
     private createControls(): void {
         this.controls = new PointerLockControls(this.main.camera, this.main.renderer.domElement);
-        this.controls.addEventListener("unlock", () => this.isLockedSetter(false));
+        this.controls.addEventListener("unlock", this.onUnlock.bind(this));
+    }
+
+    private onUnlock(): void {
+        this.isLockedSetter(false);
+        this.areControlsLocked = false;
     }
 
     private onPointerlockError(): void {
@@ -28,6 +35,7 @@ class Controls {
 
     public lockControls(): void {
         this.main.renderer.domElement.requestPointerLock();
+        this.areControlsLocked = true;
     }
 
     public setIsLockedSetter(isLockedSetter: React.Dispatch<React.SetStateAction<boolean | undefined>>): void {

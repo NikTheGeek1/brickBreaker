@@ -13,17 +13,18 @@ class Mousepicker {
 
     constructor(main: Main) {
         this.main = main;
-        this.pickableObjects = [this.main.basketballInstance.basketball];
+        // this.pickableObjects = [this.main.basketballInstance.basketball];
+        this.pickableObjects = [];
         this.intersects = new Array();
         this.intersectedObject = null;
         this.originalMaterials = {
-            [this.main.basketballInstance.basketball.name]: this.main.basketballInstance.basketball.material,
+            // [this.main.basketballInstance.basketball.name]: this.main.basketballInstance.basketball.material,
         };
         this.highlightedMaterial = new THREE.MeshBasicMaterial({ wireframe: true, color: 0x00ff00 });
     }
 
     private createRaycaster(): void {
-        this.raycaster = new THREE.Raycaster();        
+        this.raycaster = new THREE.Raycaster();
     }
 
     private registerEventListener(): void {
@@ -36,7 +37,7 @@ class Mousepicker {
             y: -(e.clientY / this.main.renderer.domElement.clientHeight) * 2 + 1
         }, this.main.camera);
         this.intersects = this.raycaster.intersectObjects(this.pickableObjects, false);
-    
+
         if (this.intersects.length > 0) {
             this.intersectedObject = this.intersects[0].object;
         } else {

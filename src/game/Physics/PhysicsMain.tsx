@@ -15,7 +15,7 @@ class PhysicsMain {
     private gui!: GUI;
     private clock: THREE.Clock = new THREE.Clock();
     private targetInstance!: Target;
-    private ballInstance!: Basketball;
+    private ballsInstance!: Basketball;
     private debugRenderer!: DebugRenderer;
     private wallsInstance!: Walls;
 
@@ -48,28 +48,21 @@ class PhysicsMain {
     }
 
     private createBallInstane(): void {
-        this.ballInstance = new Basketball(this.main, this);
-        this.ballInstance.init();
+        this.ballsInstance = new Basketball(this.main, this);
+        this.ballsInstance.init();
     }
     private copyPhysicsToRealWorldCoord(): void {
 
         // Copy coordinates from Cannon.js to Three.js
-        this.main.basketballInstance.basketball.position.set(
-            this.ballInstance.ballBody.position.x,
-            this.ballInstance.ballBody.position.y,
-            this.ballInstance.ballBody.position.z
-        );
-        this.main.basketballInstance.basketball.quaternion.set(
-            this.ballInstance.ballBody.quaternion.x,
-            this.ballInstance.ballBody.quaternion.y,
-            this.ballInstance.ballBody.quaternion.z,
-            this.ballInstance.ballBody.quaternion.w
-        );
+        this.ballsInstance.copyPhysicsToRealWorld();
+
+
         this.main.targetInstance.target.position.set(
             this.targetInstance.targetBody.position.x,
             this.targetInstance.targetBody.position.y,
             this.targetInstance.targetBody.position.z
         );
+        
         this.main.targetInstance.target.quaternion.set(
             this.targetInstance.targetBody.quaternion.x,
             this.targetInstance.targetBody.quaternion.y,

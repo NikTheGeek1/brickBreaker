@@ -1,13 +1,8 @@
 import * as THREE from 'three/build/three.module';
 import Walls from './Walls';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import Basketball from './Basketball';
 import Stats from 'three/examples/jsm/libs/stats.module';
-import Mousepicker from './Mousepicker';
-import Shield from './Shield';
 import Lights from './Lights';
-import Shadows from './Shadows';
-import BallTrajectory from './BallTrajectory';
 import Target from './Target';
 import CameraKeyListeners from './CameraKeyListeners';
 import PhysicsMain from './Physics/PhysicsMain';
@@ -20,18 +15,12 @@ class Main {
     public camera!: THREE.PerspectiveCamera;
     public renderer!: THREE.WebGLRenderer;
     public wallsInstance!: Walls;
-    public basketballInstance!: Basketball;
     public orbitControlls!: OrbitControls;
-    public shieldInstance!: Shield;
-    public mousePickerInstance!: Mousepicker;
     public lightsInstance!: Lights;
-    public shadowsInstance!: Shadows;
     public targetInstance!: Target;
-    public ballTrajectory!: BallTrajectory;
     private stats!: Stats;
     private physicsMainInstance!: PhysicsMain;
     public controlsInstance!: Controls;
-
 
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
@@ -49,9 +38,9 @@ class Main {
     }
 
     private createCamera(): void {
-        this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, .1, 1000);
+        this.camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, .1, 1000);
         this.camera.position.y = 5;
-        this.camera.position.z = 30;
+        this.camera.position.z = 14;
     }
 
     private createRenderer(): void {
@@ -75,34 +64,9 @@ class Main {
         this.wallsInstance.init();
     }
 
-    private createBasketball(): void {
-        this.basketballInstance = new Basketball(this);
-        this.basketballInstance.init();
-    }
-
-    private createMousepicker(): void {
-        this.mousePickerInstance = new Mousepicker(this);
-        this.mousePickerInstance.inti();
-    }
-
-    private createShield(): void {
-        this.shieldInstance = new Shield(this);
-        this.shieldInstance.init();
-    }
-
     private createLights(): void {
         this.lightsInstance = new Lights(this);
         this.lightsInstance.init();
-    }
-
-    private createShadows(): void {
-        this.shadowsInstance = new Shadows(this);
-        this.shadowsInstance.init();
-    }
-
-    private createBallTrajectory(): void {
-        this.ballTrajectory = new BallTrajectory(this);
-        this.ballTrajectory.init();
     }
 
     private createTargetInstance(): void {
@@ -146,14 +110,11 @@ class Main {
         this.createStats();
         this.createWalls();
         // this.createMousepicker();
-        this.createShield();
-        this.createBasketball();
         this.createLights();
         this.createTargetInstance();
         this.registerCamerKeyListeners();
         this.createControlsInstance();
         // this.createShadows();
-        this.createBallTrajectory();
         this.createPhysicsMainInstance();
         this.animate();
     }
