@@ -77,9 +77,13 @@ class Basketball {
         });
     }
 
+    private registerEventListeners(): void {
+        document.addEventListener('click', this.onClick.bind(this), false);
+
+    }
 
     public init(): void {
-        document.addEventListener('click', this.onClick.bind(this), false);
+        this.registerEventListeners();
         this.createTexture();
         this.createMaterial();
     }
